@@ -16,8 +16,6 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.Nextjs("MyWeb", {
-      path: "src",
-    });
+    new sst.aws.Nextjs("MyWeb");
   },
 });
