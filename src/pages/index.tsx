@@ -2,10 +2,13 @@ import usePatients from "@/hooks/usePatients";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/router";
 
+// Hardcoded caregiver_id to represent the Caregiver
+const CAREGIVER_ID = "97bca0dd-d50e-4b69-b416-21df0421dc15";
+
 export default function HomePage() {
   const router = useRouter();
-  const { useGetPatients } = usePatients();
-  const { data: patients } = useGetPatients();
+  const { useGetPatientsByCaregiverId } = usePatients();
+  const { data: patients } = useGetPatientsByCaregiverId(CAREGIVER_ID);
 
   return (
     <div className="flex flex-col gap-4 m-4">

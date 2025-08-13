@@ -1,9 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "@/lib/axios";
 
-const CAREGIVER_ID = "123e4567-e89b-12d3-a456-426614174000";
-
-const getMedications = async (patientId: string) => {
+const getMedicationsByPatientId = async (patientId: string) => {
   const { data } = await api.get(`/patients/${patientId}/medications`);
   return data;
 };
@@ -19,9 +17,10 @@ const createMedication = async ({ patientId, medication }: { patientId: string; 
 };
 
 const useMedications = () => {
-  const useGetMedications = (patientId: string) => useQuery({
+  const useGetMedicationsByPatientId = (patientId: string) => useQuery({
     queryKey: ["medications", patientId],
-    queryFn: () => getMedications(patientId),
+    queryFn: () => getMedicationsByPatientId(patientId),
+    enabled: !!patientId,
   });
 
   const useGetMedicationById = (patientId: string, medicationId: string) => useQuery({
@@ -35,7 +34,7 @@ const useMedications = () => {
   });
 
   return {
-    useGetMedications,
+    useGetMedicationsByPatientId,
     useGetMedicationById,
     useCreateMedication,
   }

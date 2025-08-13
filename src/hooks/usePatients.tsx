@@ -1,10 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/axios";
 
-const CAREGIVER_ID = "123e4567-e89b-12d3-a456-426614174000";
-
-const getPatients = async () => {
-  const { data } = await api.get(`/caregivers/${CAREGIVER_ID}/patients`);
+const getPatientsByCaregiverId = async (caregiverId: string) => {
+  const { data } = await api.get(`/caregivers/${caregiverId}/patients`);
   return data;
 };
 
@@ -14,9 +12,10 @@ const getPatient = async (patientId: string) => {
 };
 
 const usePatients = () => {
-  const useGetPatients = () => useQuery({
-    queryKey: ["patients"],
-    queryFn: () => getPatients(),
+  const useGetPatientsByCaregiverId = (caregiverId: string) => useQuery({
+    queryKey: ["patients", caregiverId],
+    queryFn: () => getPatientsByCaregiverId(caregiverId),
+    enabled: !!caregiverId,
   });
 
   const useGetPatient = (patientId: string) => useQuery({
@@ -26,7 +25,7 @@ const usePatients = () => {
   });
 
   return {
-    useGetPatients,
+    useGetPatientsByCaregiverId,
     useGetPatient,
   }
 };

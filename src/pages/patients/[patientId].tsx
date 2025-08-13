@@ -8,10 +8,10 @@ export default function PatientPage() {
   const router = useRouter();
   const { patientId } = router.query;
   const { useGetPatient } = usePatients();
-  const { useGetMedications } = useMedications();
+  const { useGetMedicationsByPatientId } = useMedications();
   
   const { data: patient, isLoading: patientLoading, error: patientError } = useGetPatient(patientId as string);
-  const { data: medications, isLoading: medicationsLoading, error: medicationsError } = useGetMedications(patientId as string);
+  const { data: medications, isLoading: medicationsLoading, error: medicationsError } = useGetMedicationsByPatientId(patientId as string);
 
   if (patientLoading || medicationsLoading) {
     return (
