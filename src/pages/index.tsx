@@ -1,5 +1,4 @@
 import useCaregivers from "@/hooks/useCaregivers";
-import DashboardLayout from "@/layouts/DashboardLayout";
 import { useRouter } from "next/router";
 
 // Hardcoded caregiver_id to represent the Caregiver
@@ -25,7 +24,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-HomePage.getLayout = function getLayout(page: React.ReactNode) {
-  return <DashboardLayout>{page}</DashboardLayout>;
-};
