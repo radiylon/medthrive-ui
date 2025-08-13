@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 import usePatients from '@/hooks/usePatients';
 import useMedications from '@/hooks/useMedications';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 
 export default function PatientPage() {
   const router = useRouter();
@@ -16,11 +14,11 @@ export default function PatientPage() {
   if (patientLoading || medicationsLoading) {
     return (
       <div className="container mx-auto p-4">
-        <Card>
-          <CardContent className="p-6">
+        <div>
+          <div className="p-6">
             Loading patient details...
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     );
   }
@@ -28,11 +26,11 @@ export default function PatientPage() {
   if (patientError || medicationsError) {
     return (
       <div className="container mx-auto p-4">
-        <Card>
-          <CardContent className="p-6 text-red-600">
+        <div>
+          <div className="p-6 text-red-600">
             Error loading patient details. Please try again later.
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     );
   }
@@ -40,22 +38,22 @@ export default function PatientPage() {
   if (!patient) {
     return (
       <div className="container mx-auto p-4">
-        <Card>
-          <CardContent className="p-6">
+        <div>
+          <div className="p-6">
             Patient not found.
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="container mx-auto p-4 flex flex-col gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">Patient Details</CardTitle>
-        </CardHeader>
-        <CardContent className="p-6">
+      <div>
+        <div>
+          <div className="text-2xl font-bold text-center">Patient Details</div>
+        </div>
+        <div className="p-6">
           <h3 className="text-gray-700 text-center text-2xl font-bold mb-4">{patient.first_name} {patient.last_name}</h3>
           <div className="text-center grid gap-4 grid-cols-2">
             <div className="space-y-2">
@@ -83,36 +81,36 @@ export default function PatientPage() {
               <p className="text-gray-600">{patient.created_at.split("T")[0]}</p>
             </div>
           </div>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">Medications</CardTitle>
-        </CardHeader>
-        <CardContent className="p-6">
+        </div>
+      </div>
+      <div>
+        <div>
+          <div className="text-2xl font-bold text-center">Medications</div>
+        </div>
+        <div className="p-6">
           <div className="text-center grid gap-4 grid-cols-4">
             {medications?.map((medication: any) => (
-              <Card 
+              <div 
                 key={medication.id} 
                 className="cursor-pointer hover:bg-gray-100 transition-all duration-300" 
                 onClick={() => router.push(`/patients/${patientId}/medications/${medication.id}`)}
               >
-                <CardHeader>
-                  <CardTitle className="text-gray-700 text-sm">{medication.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
+                <div>
+                  <div className="text-gray-700 text-sm">{medication.name}</div>
+                </div>
+                <div>
                   <h3 className="text-gray-700 text-sm">{medication.description}</h3>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
           <div className="flex justify-end mb-4">
-            <Button onClick={() => router.push(`/patients/${patientId}/medications/add-medication`)}>
+            <button type="button" className='btn btn-primary' onClick={() => router.push(`/patients/${patientId}/medications/add-medication`)}>
               Add Medication
-            </Button>
+            </button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

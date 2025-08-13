@@ -19,6 +19,7 @@ From there, you should be able to run `npx sst dev` for local development.
 ## TODO
 - [x] Add ability to view a Caregiver's list of Patients
 - [x] Add ability to view an individual Patient
+- [ ] Add dashboard
 - [ ] Add ability to add a Patient
 - [ ] Add ability to add a Medication and Schedule
 - [ ] Add abiliy to select a Medication and view upcoming doses

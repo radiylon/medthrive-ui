@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { Button } from '@/components/ui/button';
 import useMedications from '@/hooks/useMedications';
 
 export default function NewMedicationPage() {
@@ -7,7 +6,7 @@ export default function NewMedicationPage() {
   const { patientId } = router.query;
   const { useCreateMedication } = useMedications();
 
-  const { mutate: createMedication, isPending, error } = useCreateMedication(patientId as string);
+  const { mutate: createMedication, isPending, error } = useCreateMedication();
 
   const handleAddMedication = () => {
     const testMedication = {
@@ -37,21 +36,24 @@ export default function NewMedicationPage() {
   return (
     <div className="container mx-auto p-4 flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <Button
-          variant="outline"
+        <button
+          type="button"
+          className="btn btn-outline"
           onClick={() => router.push(`/patients/${patientId}`)}
         >
           ← Back to Patient
-        </Button>
+        </button>
       </div>
 
       <div className="flex flex-col items-center gap-4">
-        <Button 
+        <button
+          type="button"
+          className="btn btn-primary"
           onClick={handleAddMedication}
           disabled={isPending}
         >
           {isPending ? 'Adding...' : 'Add Test Medication'}
-        </Button>
+        </button>
 
         {error && (
           <p className="text-red-500">
