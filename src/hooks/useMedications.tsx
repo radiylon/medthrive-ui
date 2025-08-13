@@ -6,13 +6,13 @@ const getMedicationsByPatientId = async (patientId: string) => {
   return data;
 };
 
-const getMedicationById = async (patientId: string, medicationId: string) => {
-  const { data } = await api.get(`/patients/${patientId}/medications/${medicationId}`);
+const getMedicationById = async (medicationId: string) => {
+  const { data } = await api.get(`/medications/${medicationId}`);
   return data;
 };
 
-const createMedication = async ({ patientId, medication }: { patientId: string; medication: any }) => {
-  const { data } = await api.post(`/patients/${patientId}/medications`, medication);
+const createMedication = async (medication: any) => {
+  const { data } = await api.post(`/medications`, medication);
   return data;
 };
 
@@ -20,17 +20,17 @@ const useMedications = () => {
   const useGetMedicationsByPatientId = (patientId: string) => useQuery({
     queryKey: ["medications", patientId],
     queryFn: () => getMedicationsByPatientId(patientId),
-    enabled: !!patientId,
+    enabled: !!patientId
   });
 
-  const useGetMedicationById = (patientId: string, medicationId: string) => useQuery({
-    queryKey: ["medication", patientId, medicationId],
-    queryFn: () => getMedicationById(patientId, medicationId),
-    enabled: !!patientId,
+  const useGetMedicationById = (medicationId: string) => useQuery({
+    queryKey: ["medication", medicationId],
+    queryFn: () => getMedicationById(medicationId),
+    enabled: !!medicationId
   });
 
-  const useCreateMedication = (patientId: string) => useMutation({
-    mutationFn: (medication: any) => createMedication({ patientId, medication }),
+  const useCreateMedication = () => useMutation({
+    mutationFn: (medication: any) => createMedication(medication),
   });
 
   return {
