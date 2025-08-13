@@ -1,4 +1,5 @@
 import useCaregivers from "@/hooks/useCaregivers";
+import DashboardLayout from "@/layouts/DashboardLayout";
 import { useRouter } from "next/router";
 
 // Hardcoded caregiver_id to represent the Caregiver
@@ -13,7 +14,6 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col gap-4 m-4">
-      <h1 className="text-2xl font-bold">Caregiver Dashboard</h1>
       <div>
         <h2 className="text-lg font-bold">Caregiver Name</h2>
         <p>{caregiverData?.first_name} {caregiverData?.last_name}</p>
@@ -25,3 +25,7 @@ export default function HomePage() {
     </div>
   );
 }
+
+HomePage.getLayout = function getLayout(page: React.ReactNode) {
+  return <DashboardLayout>{page}</DashboardLayout>;
+};
