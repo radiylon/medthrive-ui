@@ -1,5 +1,6 @@
 import { useState } from "react";
 import usePatients from "@/hooks/usePatients";
+import { CAREGIVER_ID } from "@/constants";
 
 interface AddPatientModalProps {
   isOpen: boolean;
@@ -16,12 +17,21 @@ export default function AddPatientModal({ isOpen, onClose }: AddPatientModalProp
     gender: "",
   });
 
+  const { useCreatePatient } = usePatients();
+  const { mutate: createPatient } = useCreatePatient();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log('Adding patient...');
-
+    createPatient({ ...formData, caregiver_id: CAREGIVER_ID });
     onClose();
+    setFormData({
+      first_name: "",
+      last_name: "",
+      date_of_birth: "",
+      email: "",
+      phone_number: "",
+      gender: "",
+    });
   };
 
   if (!isOpen) return null;
@@ -76,6 +86,7 @@ export default function AddPatientModal({ isOpen, onClose }: AddPatientModalProp
             </label>
             <input
               type="tel"
+              pattern="[0-9]*"
               className="input input-bordered"
               value={formData.phone_number}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, phone_number: e.target.value })}
