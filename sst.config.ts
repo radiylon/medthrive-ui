@@ -16,6 +16,14 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.Nextjs("MedthriveUI");
+    const BASE_API_URL = $app.stage !== "production" 
+      ? "https://ysxshbhky9.execute-api.us-west-1.amazonaws.com"
+      : "https://59as54pz8e.execute-api.us-west-1.amazonaws.com";
+
+    new sst.aws.Nextjs("MedthriveUI", {
+      environment: {
+        NEXT_PUBLIC_BASE_API_URL: BASE_API_URL,
+      },
+    });
   },
 });
