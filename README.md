@@ -20,7 +20,7 @@ From there, you should be able to run `npx sst dev` for local development.
 - [x] Add ability to view a Caregiver's list of Patients
 - [x] Add ability to view an individual Patient
 - [x] Add Loading component
-- [ ] Add ability to add a Patient
+- [x] Add ability to add a Patient
 - [ ] Add ability to add a Medication and Schedule for Patient
 - [ ] Add abiliy to select a Medication and view upcoming doses
 - [ ] Add ability to mark Medication as inactive

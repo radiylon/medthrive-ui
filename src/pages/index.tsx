@@ -14,9 +14,7 @@ export default function HomePage() {
   return (
     <div className="container mx-auto p-8">
       <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-4xl font-bold mb-2">Patients</h1>
-        </div>
+        <h1 className="text-4xl font-bold mb-2">Patients</h1>
         <button className="btn btn-primary min-w-32 max-w-64 min-h-12 rounded-lg" onClick={() => setIsModalOpen(true)}>
           Add Patient
         </button>
