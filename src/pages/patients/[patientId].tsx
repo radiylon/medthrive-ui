@@ -125,7 +125,7 @@ export default function PatientPage() {
             </div>
 
             {medications?.length === 0 && (
-              <h3 className="text-lg text-center">No medications found</h3>
+              <h3 className="text-lg text-center mt-12">No medications found</h3>
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4 auto-rows-fr">

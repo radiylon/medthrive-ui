@@ -17,7 +17,7 @@ const initialFormData: Omit<Medication, 'id' | 'created_at' | 'updated_at'> = {
   schedule: {
     frequency: 2,
     type: "daily",
-    start_date: null
+    start_date: new Date()
   }
 };
 

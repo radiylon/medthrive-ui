@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/axios";
 import { Medication } from "@/types";
+import { useToast } from "@/contexts/ToastContext";
 
 const getMedicationsByPatientId = async (patientId: string) => {
   const { data } = await api.get(`/patients/${patientId}/medications`);
@@ -24,6 +25,7 @@ const patchMedication = async (medication: Partial<Medication>) => {
 
 const useMedications = () => {
   const queryClient = useQueryClient();
+  const { showToast } = useToast();
 
   const useGetMedicationsByPatientId = (patientId: string) => useQuery({
     queryKey: ["medications", patientId],
@@ -41,6 +43,7 @@ const useMedications = () => {
     mutationFn: (medication: Omit<Medication, 'id' | 'created_at' | 'updated_at'>) => createMedication(medication),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["medications", variables.patient_id] });
+      showToast({ message: "Medication created successfully", type: "success" });
     }
   });
 
@@ -49,6 +52,7 @@ const useMedications = () => {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["medication", variables.id] });
       queryClient.invalidateQueries({ queryKey: ["medications", variables.patient_id]})
+      showToast({ message: "Medication updated successfully", type: "success" });
     }
   });
 

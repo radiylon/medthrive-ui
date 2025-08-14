@@ -4,6 +4,7 @@ import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { ReactElement, ReactNode } from "react";
 import DefaultLayout from "@/layouts/DefaultLayout";
+import { ToastProvider } from "@/contexts/ToastContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,7 +28,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {getLayout(<Component {...pageProps} />)}
+      <ToastProvider>
+        {getLayout(<Component {...pageProps} />)}
+      </ToastProvider>
     </QueryClientProvider>
   );
 }

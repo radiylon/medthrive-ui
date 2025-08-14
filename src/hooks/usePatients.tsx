@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/axios";
 import { Patient } from "@/types";
+import { useToast } from "@/contexts/ToastContext";
 
 const getPatients = async () => {
   const { data } = await api.get('/patients');
@@ -19,6 +20,7 @@ const createPatient = async (patient: Omit<Patient, 'id' | 'created_at' | 'updat
 
 const usePatients = () => {
   const queryClient = useQueryClient();
+  const { showToast } = useToast();
 
   const useGetPatients = () => useQuery<Patient[]>({
     queryKey: ["patients"],
@@ -35,6 +37,7 @@ const usePatients = () => {
     mutationFn: (patient: Omit<Patient, 'id' | 'created_at' | 'updated_at'>) => createPatient(patient),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["patients"] });
+      showToast({ message: "Patient created successfully", type: "success" });
     }
   });
 
