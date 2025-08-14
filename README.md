@@ -1,27 +1,37 @@
-# Medthrive UI
+# MEDTHRIVE UI
 
-This is a barebones UI for an example medication management app.
+MEDTHRIVE is an example medication management app for caregivers. This is the frontend UI component of the application, built to provide a clean and intuitive interface for managing patient medications.
+
+Built using Next.js, React, and Tailwind CSS, deployed via SST.
 
 [Project Notes](https://docs.google.com/document/d/1lZQ15cpvRAOPbPFhcNsnM_V71i-V8CkYG91ndv7g3u0/edit?tab=t.0Z)
+
+## Tech Stack
+
+### Core Technologies
+- TypeScript
+- React
+- Next.js
+- TanStack Query (React Query)
+
+### Styling & UI
+- Tailwind CSS
+- DaisyUI
+
+### Infrastructure
+- SST
+- AWS CloudFront
+- AWS S3
 
 ## Installation
 
 After cloning down the repo, please run `npm install` to install all necessary dependencies.
 
-This project utilizes AWS via sst.dev.  In order to to properly run the application, you will need to ensure you have an AWS account/credentials.  You will also need to have the `aws` CLI setup.  Please see these [instructions](https://sst.dev/docs/aws-accounts/) for setting this up.
+This project utilizes AWS via sst.dev. In order to properly run the application, you will need to:
 
-Once complete, you will need to replace the profiles in `sst.config.ts` with your own account profiles.
-
-You will also need to update the URL in `config/index.ts` to match the one for your locally deployed API.
-
-From there, you should be able to run `npx sst dev` for local development.
-
-## TODO
-- [x] Add ability to view a list of Patients
-- [x] Add ability to view an individual Patient
-- [x] Add Loading component
-- [x] Add ability to add a Patient
-- [x] Add ability to add a Medication and Schedule for Patient
-- [x] Add abiliy to select a Medication and view upcoming doses
-- [x] Add ability to mark Medication as inactive
-- [x] Add ability to mark Schedule/dose as taken
+1. Have an AWS account and credentials
+2. Install and configure the AWS CLI
+3. Follow the [SST AWS setup instructions](https://sst.dev/docs/aws-accounts/)
+4. Replace the profiles in `sst.config.ts` with your own account profiles
+5. Update the API URL in `config/index.ts` to match your locally deployed API
+6. Run `npm run dev` to start local development
