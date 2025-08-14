@@ -20,7 +20,7 @@ const markScheduleAsTaken = async (scheduleId: string) => {
 const useSchedules = () => {
   const queryClient = useQueryClient();
 
-  const useGetScheduleByMedicationId = (medicationId: string) => useQuery({
+  const useGetSchedulesByMedicationId = (medicationId: string) => useQuery({
     queryKey: ["schedules", medicationId],
     queryFn: () => getSchedulesByMedicationId(medicationId),
   });
@@ -30,15 +30,16 @@ const useSchedules = () => {
     queryFn: () => getScheduleById(scheduleId),
   });
 
-  const useMarkScheduleAsTaken = (scheduleId: string) => useMutation({
-    mutationFn: () => markScheduleAsTaken(scheduleId),
-    onSuccess: () => {
+  const useMarkScheduleAsTaken = (medicationId: string) => useMutation({
+    mutationFn: markScheduleAsTaken,
+    onSuccess: (_, scheduleId) => {
       queryClient.invalidateQueries({ queryKey: ["schedule", scheduleId] });
+      queryClient.invalidateQueries({ queryKey: ["schedules", medicationId] });
     },
   });
 
   return {
-    useGetScheduleByMedicationId,
+    useGetSchedulesByMedicationId,
     useGetScheduleById,
     useMarkScheduleAsTaken,
   }

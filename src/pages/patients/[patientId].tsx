@@ -27,9 +27,9 @@ export default function PatientPage() {
         <button 
           type="button"
           onClick={() => router.push('/')} 
-          className="btn gap-2 w-fit min-w-32 max-w-64 min-h-12 rounded-lg"
+          className="btn gap-2 w-fit min-w-32 max-w-64 min-h-12 rounded-lg font-bold text-lg"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
           </svg>
           Back to Patients
@@ -107,11 +107,11 @@ export default function PatientPage() {
                 <h2 className="card-title text-2xl">Medications</h2>
                 <div className="flex items-center gap-4 text-sm">
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded bg-success/50"></div>
+                    <div className="w-3 h-3 rounded-full bg-success/50"></div>
                     <span>Active</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded bg-base-200"></div>
+                    <div className="w-3 h-3 rounded-full bg-base-200"></div>
                     <span>Inactive</span>
                   </div>
                 </div>
