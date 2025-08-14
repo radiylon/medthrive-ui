@@ -8,7 +8,7 @@ export interface Medication {
   schedule: {
     frequency: number;
     type: "daily" | "weekly";
-    start_date: Date;
+    start_date: Date | null;
   }
   created_at: Date;
   updated_at: Date;
@@ -45,6 +45,12 @@ export interface Patient {
   phone_number: string;
   date_of_birth: string;
   gender: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+  }
   created_at: Date;
   updated_at: Date;
 }
