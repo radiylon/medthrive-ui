@@ -1,43 +1,66 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/axios";
+import { Medication } from "@/types";
+import { useToast } from "@/contexts/ToastContext";
 
-const CAREGIVER_ID = "123e4567-e89b-12d3-a456-426614174000";
-
-const getMedications = async (patientId: string) => {
+const getMedicationsByPatientId = async (patientId: string) => {
   const { data } = await api.get(`/patients/${patientId}/medications`);
   return data;
 };
 
-const getMedicationById = async (patientId: string, medicationId: string) => {
-  const { data } = await api.get(`/patients/${patientId}/medications/${medicationId}`);
+const getMedicationById = async (medicationId: string) => {
+  const { data } = await api.get(`/medications/${medicationId}`);
   return data;
 };
 
-const createMedication = async ({ patientId, medication }: { patientId: string; medication: any }) => {
-  const { data } = await api.post(`/patients/${patientId}/medications`, medication);
+const createMedication = async (medication: Omit<Medication, 'id' | 'created_at' | 'updated_at'>) => {
+  const { data } = await api.post(`/medications`, medication);
+  return data;
+};
+
+const patchMedication = async (medication: Partial<Medication>) => {
+  const { data } = await api.patch(`/medications`, medication);
   return data;
 };
 
 const useMedications = () => {
-  const useGetMedications = (patientId: string) => useQuery({
+  const queryClient = useQueryClient();
+  const { showToast } = useToast();
+
+  const useGetMedicationsByPatientId = (patientId: string) => useQuery({
     queryKey: ["medications", patientId],
-    queryFn: () => getMedications(patientId),
+    queryFn: () => getMedicationsByPatientId(patientId),
+    enabled: !!patientId
   });
 
-  const useGetMedicationById = (patientId: string, medicationId: string) => useQuery({
-    queryKey: ["medication", patientId, medicationId],
-    queryFn: () => getMedicationById(patientId, medicationId),
-    enabled: !!patientId,
+  const useGetMedicationById = (medicationId: string) => useQuery({
+    queryKey: ["medication", medicationId],
+    queryFn: () => getMedicationById(medicationId),
+    enabled: !!medicationId
   });
 
-  const useCreateMedication = (patientId: string) => useMutation({
-    mutationFn: (medication: any) => createMedication({ patientId, medication }),
+  const useCreateMedication = () => useMutation({
+    mutationFn: (medication: Omit<Medication, 'id' | 'created_at' | 'updated_at'>) => createMedication(medication),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["medications", variables.patient_id] });
+      showToast({ message: "Medication created successfully", type: "success" });
+    }
+  });
+
+  const usePatchMedication = () => useMutation({
+    mutationFn: (medication: Partial<Medication>) => patchMedication(medication),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["medication", variables.id] });
+      queryClient.invalidateQueries({ queryKey: ["medications", variables.patient_id]})
+      showToast({ message: "Medication updated successfully", type: "success" });
+    }
   });
 
   return {
-    useGetMedications,
+    useGetMedicationsByPatientId,
     useGetMedicationById,
     useCreateMedication,
+    usePatchMedication,
   }
 };
 

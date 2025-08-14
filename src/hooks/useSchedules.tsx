@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/axios";
+import { useToast } from "@/contexts/ToastContext";
 
 const getSchedulesByMedicationId = async (medicationId: string) => {
   const { data } = await api.get(`/medications/${medicationId}/schedules`);
@@ -13,21 +14,24 @@ const markScheduleAsTaken = async (scheduleId: string) => {
 
 const useSchedules = () => {
   const queryClient = useQueryClient();
+  const { showToast } = useToast();
 
-  const useGetScheduleByMedicationId = (medicationId: string) => useQuery({
+  const useGetSchedulesByMedicationId = (medicationId: string) => useQuery({
     queryKey: ["schedules", medicationId],
     queryFn: () => getSchedulesByMedicationId(medicationId),
   });
 
-  const useMarkScheduleAsTaken = (scheduleId: string, medicationId: string) => useMutation({
-    mutationFn: () => markScheduleAsTaken(scheduleId),
-    onSuccess: () => {
+  const useMarkScheduleAsTaken = (medicationId: string) => useMutation({
+    mutationFn: markScheduleAsTaken,
+    onSuccess: (_, scheduleId) => {
+      queryClient.invalidateQueries({ queryKey: ["schedule", scheduleId] });
       queryClient.invalidateQueries({ queryKey: ["schedules", medicationId] });
+      showToast({ message: "Schedule marked as taken", type: "success" });
     },
   });
 
   return {
-    useGetScheduleByMedicationId,
+    useGetSchedulesByMedicationId,
     useMarkScheduleAsTaken,
   }
 };
