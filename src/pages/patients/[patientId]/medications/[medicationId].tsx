@@ -7,9 +7,11 @@ import Loading from '@/components/Loading';
 export default function MedicationPage() {
   const router = useRouter();
   const { patientId, medicationId } = router.query;
-  const { useGetMedicationById } = useMedications();
+  const { useGetMedicationById, usePatchMedication } = useMedications();
   const { useGetSchedulesByMedicationId } = useSchedules();
   const { useMarkScheduleAsTaken } = useSchedules();
+
+  const { mutate: patchMedication } = usePatchMedication();
 
   const { 
     data: medication, 
@@ -28,6 +30,16 @@ export default function MedicationPage() {
 
   const onScheduleClick = (scheduleId: string) => {
     mutate(scheduleId);
+  }
+
+  const onToggleActive = () => {
+    if (medication) {
+      patchMedication({
+        id: medication.id,
+        patient_id: patientId as string,
+        is_active: !medication.is_active
+      });
+    }
   }
 
   const isLoading = medicationLoading || schedulesLoading;
@@ -66,10 +78,20 @@ export default function MedicationPage() {
       {!isLoading && (
       <div className="card bg-base-100 shadow-lg">
         <div className="card-body">
-          <h2 className="card-title text-2xl justify-center">
-            {medication?.name}
-          </h2>
-          <p className="text-sm font-bold text-center text-secondary">Medication ID: {medication?.id}</p>
+          <div className="flex justify-between items-start">
+            <div className="flex-1 text-center">
+              <h2 className="card-title text-2xl justify-center">
+                {medication?.name}
+              </h2>
+              <p className="text-sm font-bold text-center text-secondary">Medication ID: {medication?.id}</p>
+            </div>
+            <button
+              onClick={onToggleActive}
+              className={`btn btn-md rounded-lg ${medication?.is_active ? 'btn-error' : 'btn-success'}`}
+            >
+              {medication?.is_active ? 'Deactivate' : 'Activate'}
+            </button>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
             <div className="card bg-base-200/50">
               <div className="card-body p-4">

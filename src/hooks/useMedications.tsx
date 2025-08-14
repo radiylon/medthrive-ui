@@ -17,6 +17,11 @@ const createMedication = async (medication: Omit<Medication, 'id' | 'created_at'
   return data;
 };
 
+const patchMedication = async (medication: Partial<Medication>) => {
+  const { data } = await api.patch(`/medications`, medication);
+  return data;
+};
+
 const useMedications = () => {
   const queryClient = useQueryClient();
 
@@ -39,10 +44,19 @@ const useMedications = () => {
     }
   });
 
+  const usePatchMedication = () => useMutation({
+    mutationFn: (medication: Partial<Medication>) => patchMedication(medication),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["medication", variables.id] });
+      queryClient.invalidateQueries({ queryKey: ["medications", variables.patient_id]})
+    }
+  });
+
   return {
     useGetMedicationsByPatientId,
     useGetMedicationById,
     useCreateMedication,
+    usePatchMedication,
   }
 };
 

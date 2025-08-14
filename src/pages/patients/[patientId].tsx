@@ -49,7 +49,7 @@ export default function PatientPage() {
       )}
 
       {/* Patient Details Card */}
-      {patient && (
+      {!isLoading && patient && (
         <div className="card bg-base-100 shadow-lg">
           <div className="card-body">
             <h2 className="card-title text-2xl justify-center">
@@ -99,21 +99,21 @@ export default function PatientPage() {
       )}
 
       {/* Medications Section */}
-      {patient && medications && (
+      {!isLoading && (
         <div className="card bg-base-100 shadow-lg">
           <div className="card-body">
             <div className="flex justify-between items-center">
               <div className="flex flex-col gap-2">
                 <h2 className="card-title text-2xl">Medications</h2>
-                <div className="flex items-center gap-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-success/50"></div>
-                    <span>Active</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-base-200"></div>
-                    <span>Inactive</span>
-                  </div>
+              </div>
+              <div className="flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-success/50"></div>
+                  <span>Active</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-base-200"></div>
+                  <span>Inactive</span>
                 </div>
               </div>
               <button  
