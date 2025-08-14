@@ -7,15 +7,24 @@ interface AddPatientModalProps {
   onClose: () => void;
 }
 
+const initialFormData = {
+  first_name: "",
+  last_name: "",
+  date_of_birth: "",
+  email: "",
+  phone_number: "",
+  gender: "",
+  address: {
+    street: "",
+    city: "",
+    state: "",
+    zip: "",
+  }
+};
+
 export default function AddPatientModal({ isOpen, onClose }: AddPatientModalProps) {
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    date_of_birth: "",
-    email: "",
-    phone_number: "",
-    gender: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
+
 
   const { useCreatePatient } = usePatients();
   const { mutate: createPatient } = useCreatePatient();
@@ -24,33 +33,26 @@ export default function AddPatientModal({ isOpen, onClose }: AddPatientModalProp
     e.preventDefault();
     createPatient({ ...formData, caregiver_id: CAREGIVER_ID });
     onClose();
-    setFormData({
-      first_name: "",
-      last_name: "",
-      date_of_birth: "",
-      email: "",
-      phone_number: "",
-      gender: "",
-    });
+    setFormData(initialFormData);
   };
 
   if (!isOpen) return null;
 
   return (
     <dialog className={`modal ${isOpen ? 'modal-open' : ''}`}>
-      <div className="modal-box">
+      <div className="modal-box max-w-4xl w-full">
         <form method="dialog">
           <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={onClose}>✕</button>
         </form>
-        <h3 className="font-bold text-lg mb-4 text-center">Add New Patient</h3>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <h3 className="font-bold text-2xl mb-4 text-center">Add New Patient</h3>
+        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-x-6 gap-y-4">
           <div className="form-control flex flex-col gap-2">
             <label className="label">
               <span className="label-text">First Name</span>
             </label>
             <input
               type="text"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               value={formData.first_name}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, first_name: e.target.value })}
               required
@@ -62,7 +64,7 @@ export default function AddPatientModal({ isOpen, onClose }: AddPatientModalProp
             </label>
             <input
               type="text"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               value={formData.last_name}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, last_name: e.target.value })}
               required
@@ -74,7 +76,7 @@ export default function AddPatientModal({ isOpen, onClose }: AddPatientModalProp
             </label>
             <input
               type="email"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               value={formData.email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, email: e.target.value })}
               required
@@ -87,7 +89,7 @@ export default function AddPatientModal({ isOpen, onClose }: AddPatientModalProp
             <input
               type="tel"
               pattern="[0-9]*"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               value={formData.phone_number}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, phone_number: e.target.value })}
               required
@@ -99,7 +101,7 @@ export default function AddPatientModal({ isOpen, onClose }: AddPatientModalProp
             </label>
             <input
               type="date"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               value={formData.date_of_birth}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, date_of_birth: e.target.value })}
               required
@@ -110,7 +112,7 @@ export default function AddPatientModal({ isOpen, onClose }: AddPatientModalProp
               <span className="label-text">Gender</span>
             </label>
             <select
-              className="select select-bordered"
+              className="select select-bordered w-full"
               value={formData.gender}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, gender: e.target.value })}
               required
@@ -121,7 +123,55 @@ export default function AddPatientModal({ isOpen, onClose }: AddPatientModalProp
               <option value="other">Other</option>
             </select>
           </div>
-          <div className="modal-action flex justify-end gap-2 mt-12">
+          <div className="form-control flex flex-col gap-2">
+            <label className="label">
+              <span className="label-text">Street</span>
+            </label>
+            <input
+              type="text"
+              className="input input-bordered w-full"
+              value={formData.address.street}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, address: { ...formData.address, street: e.target.value } })}
+              required
+            />
+          </div>
+          <div className="form-control flex flex-col gap-2">
+            <label className="label">
+              <span className="label-text">City</span>
+            </label>
+            <input
+              type="text"
+              className="input input-bordered w-full"
+              value={formData.address.city}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, address: { ...formData.address, city: e.target.value } })}
+              required
+            />
+          </div>
+          <div className="form-control flex flex-col gap-2">
+            <label className="label">
+              <span className="label-text">State</span>
+            </label>
+            <input
+              type="text"
+              className="input input-bordered w-full"
+              value={formData.address.state}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, address: { ...formData.address, state: e.target.value } })}
+              required
+            />
+          </div>
+          <div className="form-control flex flex-col gap-2">
+            <label className="label">
+              <span className="label-text">Zip</span>
+            </label>
+            <input
+              type="text"
+              className="input input-bordered w-full"
+              value={formData.address.zip}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, address: { ...formData.address, zip: e.target.value } })}
+              required
+            />
+          </div>
+          <div className="modal-action flex justify-end gap-2 mt-8 col-span-2">
             <button type="button" className="btn btn-outline hover:bg-base-200/50 min-w-32 max-w-64 min-h-12 rounded-lg" onClick={onClose}>Cancel</button>
             <button type="submit" className="btn btn-primary min-w-32 max-w-64 min-h-12 rounded-lg">Add Patient</button>
           </div>

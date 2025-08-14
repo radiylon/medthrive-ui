@@ -17,7 +17,7 @@ You will also need to update the URL in `config/index.ts` to match the one for y
 From there, you should be able to run `npx sst dev` for local development.
 
 ## TODO
-- [x] Add ability to view a Caregiver's list of Patients
+- [x] Add ability to view a list of Patients
 - [x] Add ability to view an individual Patient
 - [x] Add Loading component
 - [x] Add ability to add a Patient

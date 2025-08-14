@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/axios";
 import { Patient } from "@/types";
 
-const getPatientsByCaregiverId = async (caregiverId: string) => {
-  const { data } = await api.get(`/caregivers/${caregiverId}/patients`);
+const getPatients = async () => {
+  const { data } = await api.get('/patients');
   return data;
 };
 
@@ -20,10 +20,9 @@ const createPatient = async (patient: Omit<Patient, 'id' | 'created_at' | 'updat
 const usePatients = () => {
   const queryClient = useQueryClient();
 
-  const useGetPatientsByCaregiverId = (caregiverId: string) => useQuery<Patient[]>({
-    queryKey: ["patients", caregiverId],
-    queryFn: () => getPatientsByCaregiverId(caregiverId),
-    enabled: !!caregiverId,
+  const useGetPatients = () => useQuery<Patient[]>({
+    queryKey: ["patients"],
+    queryFn: () => getPatients(),
   });
 
   const useGetPatient = (patientId: string) => useQuery<Patient>({
@@ -34,13 +33,13 @@ const usePatients = () => {
   
   const useCreatePatient = () => useMutation({
     mutationFn: (patient: Omit<Patient, 'id' | 'created_at' | 'updated_at'>) => createPatient(patient),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["patients", variables.caregiver_id] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["patients"] });
     }
   });
 
   return {
-    useGetPatientsByCaregiverId,
+    useGetPatients,
     useGetPatient,
     useCreatePatient
   }
