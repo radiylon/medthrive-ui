@@ -103,8 +103,20 @@ export default function PatientPage() {
         <div className="card bg-base-100 shadow-lg">
           <div className="card-body">
             <div className="flex justify-between items-center">
-              <h2 className="card-title text-2xl">Medications</h2>
-              <button 
+              <div className="flex flex-col gap-2">
+                <h2 className="card-title text-2xl">Medications</h2>
+                <div className="flex items-center gap-4 text-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 rounded bg-success/50"></div>
+                    <span>Active</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 rounded bg-base-200"></div>
+                    <span>Inactive</span>
+                  </div>
+                </div>
+              </div>
+              <button  
                 className="btn btn-primary min-w-32 max-w-64 min-h-12 rounded-lg" 
                 onClick={() => setIsModalOpen(true)}
               >
@@ -116,16 +128,16 @@ export default function PatientPage() {
               <h3 className="text-lg text-center">No medications found</h3>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4 auto-rows-fr">
               {medications?.map((medication: Medication) => (
                 <div 
                   key={medication.id} 
-                  className={`card transition-all cursor-pointer ${medication.is_active ? 'bg-success/50 hover:bg-success/70' : 'bg-base-200 hover:bg-base-200/50'}`} 
+                  className={`card w-full h-full transition-all cursor-pointer ${medication.is_active ? 'bg-success/50 hover:bg-success/70' : 'bg-base-200 hover:bg-base-200/50'}`} 
                   onClick={() => router.push(`/patients/${patientId}/medications/${medication.id}`)}
                 >
                   <div className="card-body p-4">
-                    <h3 className="card-title text-lg">{medication.name}</h3>
-                    <p className="text-sm opacity-70">{medication.description}</p>
+                    <h3 className="card-title text-lg font-bold">{medication.name}</h3>
+                    <p className="text-sm italic">{medication.description}</p>
                   </div>
                 </div>
               ))}

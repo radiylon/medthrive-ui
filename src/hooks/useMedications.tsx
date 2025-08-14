@@ -34,8 +34,8 @@ const useMedications = () => {
 
   const useCreateMedication = () => useMutation({
     mutationFn: (medication: Omit<Medication, 'id' | 'created_at' | 'updated_at'>) => createMedication(medication),
-    onSuccess: (_, medication) => {
-      queryClient.invalidateQueries({ queryKey: ["medications", medication.patient_id] });
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["medications", variables.patient_id] });
     }
   });
 
