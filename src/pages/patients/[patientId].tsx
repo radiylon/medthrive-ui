@@ -4,6 +4,7 @@ import usePatients from '@/hooks/usePatients';
 import useMedications from '@/hooks/useMedications';
 import Loading from '@/components/Loading';
 import AddMedicationModal from '@/components/modals/AddMedicationModal';
+import { Medication } from '@/types';
 
 export default function PatientPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +19,6 @@ export default function PatientPage() {
 
   const isLoading = patientLoading || medicationsLoading;
   const isError = patientError || medicationsError;
-
 
   return (
     <div className="container mx-auto p-8 space-y-8">
@@ -117,10 +117,10 @@ export default function PatientPage() {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              {medications?.map((medication: any) => (
+              {medications?.map((medication: Medication) => (
                 <div 
                   key={medication.id} 
-                  className="card bg-base-200 hover:bg-base-300 transition-all cursor-pointer" 
+                  className={`card transition-all cursor-pointer ${medication.is_active ? 'bg-success/50 hover:bg-success/70' : 'bg-base-200 hover:bg-base-200/50'}`} 
                   onClick={() => router.push(`/patients/${patientId}/medications/${medication.id}`)}
                 >
                   <div className="card-body p-4">

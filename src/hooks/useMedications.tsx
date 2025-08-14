@@ -12,7 +12,7 @@ const getMedicationById = async (medicationId: string) => {
   return data;
 };
 
-const createMedication = async (medication: any) => {
+const createMedication = async (medication: Omit<Medication, 'id' | 'created_at' | 'updated_at'>) => {
   const { data } = await api.post(`/medications`, medication);
   return data;
 };
