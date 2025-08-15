@@ -1,4 +1,4 @@
-# MEDTHRIVE UI
+# medthrive-ui
 
 MEDTHRIVE is an example medication management app for caregivers. This is the frontend UI component of the application, built to provide a clean and intuitive interface for managing patient medications.
 
