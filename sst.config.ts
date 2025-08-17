@@ -18,7 +18,7 @@ export default $config({
   async run() {
     const BASE_API_URL = $app.stage !== "production" 
       ? "https://zz61s1kpd7.execute-api.us-west-1.amazonaws.com"
-      : "https://n40hzqn1v4.execute-api.us-west-1.amazonaws.com";
+      : "https://qyzgudkse6.execute-api.us-west-1.amazonaws.com";
 
     new sst.aws.Nextjs("MedthriveUI", {
       environment: {

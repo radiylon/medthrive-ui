@@ -1,8 +1,10 @@
 # medthrive-ui
 
-MEDTHRIVE is an example medication management app for caregivers. This is the frontend UI component of the application, built to provide a clean and intuitive interface for managing patient medications.
+MEDTHRIVE is an example medication management app for caregivers. This is the frontend UI component of the application, built to provide a clean and intuitive interface for managing patient medications.  For the API repo, please see [medthrive-api](https://github.com/radiylon/medthrive-api).
 
 Built using Next.js, React, and Tailwind CSS, deployed via SST.
+
+[App Demo](https://d3aozqk9inqzy1.cloudfront.net/)
 
 [Project Notes](https://docs.google.com/document/d/1lZQ15cpvRAOPbPFhcNsnM_V71i-V8CkYG91ndv7g3u0/edit?tab=t.0Z)
 
