@@ -41,12 +41,12 @@ export default function AddMedicationModal({ isOpen, onClose }: AddMedicationMod
 
   return (
     <dialog className={`modal ${isOpen ? 'modal-open' : ''}`}>
-      <div className="modal-box max-w-4xl w-full">
+      <div className="modal-box max-w-4xl w-full mx-4 sm:mx-auto">
         <form method="dialog">
           <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={onClose}>✕</button>
         </form>
-        <h3 className="font-bold text-2xl mb-4 text-center">Add New Medication</h3>
-        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-x-6 gap-y-4">
+        <h3 className="font-bold text-xl sm:text-2xl mb-4 text-center">Add New Medication</h3>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
           <div className="form-control flex flex-col gap-2">
             <label className="label">
               <span className="label-text">Medication Name</span>
@@ -120,9 +120,9 @@ export default function AddMedicationModal({ isOpen, onClose }: AddMedicationMod
               <option value="weekly">Weekly</option>
             </select>
           </div>
-          <div className="modal-action flex justify-end gap-2 mt-8 col-span-2">
-            <button type="button" className="btn btn-outline hover:bg-base-200/50 min-w-32 max-w-64 min-h-12 rounded-lg" onClick={onClose}>Cancel</button>
-            <button type="submit" className="btn btn-primary min-w-32 max-w-64 min-h-12 rounded-lg">Add Medication</button>
+          <div className="modal-action flex flex-col sm:flex-row items-center justify-center sm:justify-end gap-2 mt-8 col-span-1 sm:col-span-2">
+            <button type="button" className="btn btn-outline hover:bg-base-200/50 min-w-32 max-w-64 min-h-12 rounded-lg w-full sm:w-auto" onClick={onClose}>Cancel</button>
+            <button type="submit" className="btn btn-primary min-w-32 max-w-64 min-h-12 rounded-lg w-full sm:w-auto">Add Medication</button>
           </div>
         </form>
       </div>

@@ -23,16 +23,17 @@ export default function PatientPage() {
   return (
     <div className="container mx-auto p-8 space-y-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold">Patient Details</h1>
+        <h1 className="text-2xl sm:text-4xl font-bold">Patient Details</h1>
         <button 
           type="button"
           onClick={() => router.push('/')} 
-          className="btn gap-2 w-fit min-w-32 max-w-64 min-h-12 rounded-lg font-bold text-lg"
+          className="btn gap-1 sm:gap-2 w-fit min-w-fit sm:min-w-32 max-w-64 min-h-8 sm:min-h-12 rounded-lg font-bold text-sm sm:text-lg"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-3 h-3 sm:w-4 sm:h-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
           </svg>
-          Back to Patients
+          <span className="hidden sm:inline">Back to Patients</span>
+          <span className="sm:hidden">Back</span>
         </button>
       </div>
 
@@ -102,26 +103,28 @@ export default function PatientPage() {
       {!isLoading && (
         <div className="card bg-base-100 shadow-lg">
           <div className="card-body">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
               <div className="flex flex-col gap-2">
                 <h2 className="card-title text-2xl">Medications</h2>
               </div>
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-success/50"></div>
-                  <span>Active</span>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                <div className="flex items-center gap-4 text-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-success/50"></div>
+                    <span>Active</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-base-200"></div>
+                    <span>Inactive</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-base-200"></div>
-                  <span>Inactive</span>
-                </div>
+                <button  
+                  className="btn btn-primary min-w-32 max-w-64 min-h-12 rounded-lg w-full sm:w-auto" 
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Add Medication
+                </button>
               </div>
-              <button  
-                className="btn btn-primary min-w-32 max-w-64 min-h-12 rounded-lg" 
-                onClick={() => setIsModalOpen(true)}
-              >
-                Add Medication
-              </button>
             </div>
 
             {medications?.length === 0 && (

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import useMedications from '@/hooks/useMedications';
 import useSchedules from '@/hooks/useSchedules';
@@ -5,6 +6,7 @@ import { Schedule } from '@/types';
 import Loading from '@/components/Loading';
 
 export default function MedicationPage() {
+  const [pendingScheduleId, setPendingScheduleId] = useState<string | null>(null);
   const router = useRouter();
   const { patientId, medicationId } = router.query;
   const { useGetMedicationById, usePatchMedication } = useMedications();
@@ -26,10 +28,15 @@ export default function MedicationPage() {
     error: schedulesError
   } = useGetSchedulesByMedicationId(medicationId as string);
 
-  const { mutate } = useMarkScheduleAsTaken(medicationId as string);
+  const { mutate, isPending } = useMarkScheduleAsTaken(medicationId as string);
 
   const onScheduleClick = (scheduleId: string) => {
-    mutate(scheduleId);
+    setPendingScheduleId(scheduleId);
+    mutate(scheduleId, {
+      onSettled: () => {
+        setPendingScheduleId(null);
+      }
+    });
   }
 
   const onToggleActive = () => {
@@ -49,16 +56,17 @@ export default function MedicationPage() {
     <div className="container mx-auto p-8 space-y-8">
       {/* Header */}
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold">Medication Details</h1>
+        <h1 className="text-2xl sm:text-4xl font-bold">Medication Details</h1>
         <button
           type="button"
           onClick={() => router.push(`/patients/${patientId}`)}
-          className="btn gap-2 w-fit min-w-32 max-w-64 min-h-12 rounded-lg font-bold text-lg"
+          className="btn gap-1 sm:gap-2 w-fit min-w-fit sm:min-w-32 max-w-64 min-h-8 sm:min-h-12 rounded-lg font-bold text-sm sm:text-lg"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-3 h-3 sm:w-4 sm:h-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
           </svg>
-          Back to Patient
+          <span className="hidden sm:inline">Back to Patient</span>
+          <span className="sm:hidden">Back</span>
         </button>
       </div>
 
@@ -78,7 +86,7 @@ export default function MedicationPage() {
       {!isLoading && (
       <div className="card bg-base-100 shadow-lg">
         <div className="card-body">
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
             <div className="flex-1 text-center">
               <h2 className="card-title text-2xl justify-center">
                 {medication?.name}
@@ -87,7 +95,7 @@ export default function MedicationPage() {
             </div>
             <button
               onClick={onToggleActive}
-              className={`btn btn-md rounded-lg ${medication?.is_active ? 'btn-error' : 'btn-success'}`}
+              className={`btn btn-md rounded-lg w-full sm:w-auto ${medication?.is_active ? 'btn-error' : 'btn-success'}`}
             >
               {medication?.is_active ? 'Deactivate' : 'Activate'}
             </button>
@@ -138,15 +146,17 @@ export default function MedicationPage() {
       {!isLoading && (
         <div className="card bg-base-100 shadow-lg">
           <div className="card-body">
-            <div className="flex justify-between items-center">
-              <h2 className="card-title text-2xl">Scheduled Doses</h2>
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-success/50"></div>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+              <div className="flex flex-col gap-2">
+                <h2 className="card-title text-2xl">Scheduled Doses</h2>
+              </div>
+              <div className="flex items-center gap-2 sm:gap-4 text-sm">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-success/50"></div>
                   <span>Taken</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-base-200"></div>
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-base-200"></div>
                   <span>Not Taken</span>
                 </div>
               </div>
@@ -172,13 +182,13 @@ export default function MedicationPage() {
                         'Not Taken'}</td>
                       <td>
                         {!dose.taken_at && (
-                          <button 
-                            onClick={() => onScheduleClick(dose.id)}
-                            className={`btn btn-md ${dose.taken_at ? 'btn-disabled' : 'btn-success'} rounded-lg`}
-                            disabled={!!dose.taken_at}
-                          >
-                            Mark Taken
-                          </button>
+                                                      <button 
+                              onClick={() => onScheduleClick(dose.id)}
+                              className={`btn btn-md ${dose.taken_at ? 'btn-disabled' : 'btn-success'} rounded-lg w-full sm:w-auto text-xs sm:text-sm`}
+                              disabled={!!dose.taken_at || pendingScheduleId === dose.id}
+                            >
+                              {pendingScheduleId === dose.id ? 'Marking...' : 'Mark Taken'}
+                            </button>
                         )}
                       </td>
                     </tr>
