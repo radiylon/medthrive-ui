@@ -29,10 +29,10 @@ export default function HomePage() {
         </div>
       )}
       {patients && patients.length > 0 && (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {patients?.map((patient: Patient) => (
             <Link key={patient.id} href={`/patients/${patient.id}`}>
-              <div className="card flex flex-col shadow-md min-w-32 max-w-72 bg-base-100 hover:bg-base-100/50 transition-all cursor-pointer items-center justify-center">
+              <div className="card flex flex-col shadow-md w-full sm:min-w-32 sm:max-w-72 bg-base-100 hover:bg-base-100/50 transition-all cursor-pointer items-center justify-center">
                 <div className="card-body">
                   <h2 className="card-title">
                     {patient.first_name} {patient.last_name}
@@ -43,7 +43,6 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
-        
       )}
       <AddPatientModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
