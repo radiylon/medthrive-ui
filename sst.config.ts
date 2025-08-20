@@ -9,16 +9,14 @@ export default $config({
       home: "aws",
       providers: {
         aws: {
-          profile: input?.stage === "production" ? "radiylon-production" : "radiylon-dev",
+          profile: input?.stage === "production" ? "radiylon-production" : "radiylon-develop",
           region: "us-west-1",
         },
       },
     };
   },
   async run() {
-    const BASE_API_URL = $app.stage !== "production" 
-      ? "https://nhq4ui7yle.execute-api.us-west-1.amazonaws.com"
-      : "https://qyzgudkse6.execute-api.us-west-1.amazonaws.com";
+    const BASE_API_URL = process.env.MEDTHRIVE_API_URL || "";
 
     new sst.aws.Nextjs("MedthriveUI", {
       environment: {
