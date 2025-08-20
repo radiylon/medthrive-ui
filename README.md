@@ -4,7 +4,7 @@ MEDTHRIVE is an example medication management app for caregivers. This is the fr
 
 Built using Next.js, React, and Tailwind CSS, deployed via SST.
 
-[App Demo](https://d3aozqk9inqzy1.cloudfront.net/)
+[App Demo](https://d155y5xplx1o61.cloudfront.net/)
 
 [Project Notes](https://docs.google.com/document/d/1lZQ15cpvRAOPbPFhcNsnM_V71i-V8CkYG91ndv7g3u0/edit?tab=t.0Z)
 
@@ -35,5 +35,6 @@ This project utilizes AWS via sst.dev. In order to properly run the application,
 2. Install and configure the AWS CLI
 3. Follow the [SST AWS setup instructions](https://sst.dev/docs/aws-accounts/)
 4. Replace the profiles in `sst.config.ts` with your own account profiles
-5. Update the API URL in `config/index.ts` to match your locally deployed API
+5. Create a `.env` file at the root and set `MEDTHRIVE_API_URL`
+- You will need to have `medthrive-api` running locally
 6. Run `npm run dev` to start local development
