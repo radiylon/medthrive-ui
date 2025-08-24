@@ -15,6 +15,15 @@ export default $config({
       },
     };
   },
+  console: {
+    autodeploy: {
+      target(event) {
+        if (event.type === "branch" && event.branch === "main" && event.action === "pushed") {
+          return { stage: "production" };
+        }
+      }
+    }
+  },
   async run() {
     const BASE_API_URL = process.env.MEDTHRIVE_API_URL || "";
 
