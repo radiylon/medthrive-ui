@@ -49,7 +49,7 @@ export interface Patient {
     street: string;
     city: string;
     state: string;
-    zip: string;
+    zipcode: string;
   }
   created_at: Date;
   updated_at: Date;

@@ -18,7 +18,7 @@ const initialFormData = {
     street: "",
     city: "",
     state: "",
-    zip: "",
+    zipcode: "",
   }
 };
 
@@ -161,13 +161,13 @@ export default function AddPatientModal({ isOpen, onClose }: AddPatientModalProp
           </div>
           <div className="form-control flex flex-col gap-2">
             <label className="label">
-              <span className="label-text">Zip</span>
+              <span className="label-text">Zipcode</span>
             </label>
             <input
               type="text"
               className="input input-bordered w-full"
-              value={formData.address.zip}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, address: { ...formData.address, zip: e.target.value } })}
+              value={formData.address.zipcode}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, address: { ...formData.address, zipcode: e.target.value } })}
               required
             />
           </div>

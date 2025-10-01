@@ -85,7 +85,7 @@ export default function PatientPage() {
               <div className="card bg-base-200/50">
                 <div className="card-body p-4">
                   <h3 className="text-sm opacity-70 font-bold">Address</h3>
-                  <p className="font-medium">{patient.address.street}, {patient.address.city}, {patient.address.state} {patient.address.zip}</p>
+                  <p className="font-medium">{patient.address.street}, {patient.address.city}, {patient.address.state} {patient.address.zipcode}</p>
                 </div>
               </div>
               <div className="card bg-base-200/50">
