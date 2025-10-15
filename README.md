@@ -23,7 +23,7 @@ Built using Next.js, React, and Tailwind CSS, deployed via SST.
 
 ## Installation
 
-After cloning down the repo, please run `npm install` to install all necessary dependencies.
+After cloning down the repo, please run `pnpm install` to install all necessary dependencies.
 
 This project utilizes AWS via sst.dev. In order to properly run the application, you will need to:
 
@@ -33,4 +33,4 @@ This project utilizes AWS via sst.dev. In order to properly run the application,
 4. Replace the profiles in `sst.config.ts` with your own account profiles
 5. Create a `.env` file at the root and set `MEDTHRIVE_API_URL`
 - You will need to have `medthrive-api` running locally
-6. Run `npm run dev` to start local development
+6. Run `pnpm run dev` to start local development
